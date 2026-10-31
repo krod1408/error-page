@@ -68,12 +68,33 @@
             border-radius: 2px;
         }
 
+        /* Terminal block styling */
+        .terminal-text-container {
+            min-height: 50px; /* Prevents layout shifting while typing */
+            margin-bottom: 2.5rem;
+        }
+
         p {
             color: #a0a0a5;
-            font-size: 1rem;
+            font-size: 1.05rem;
             line-height: 1.6;
-            margin-bottom: 2.5rem;
-            font-weight: 400;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            display: inline;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 17px;
+            background-color: #ff3344;
+            margin-left: 5px;
+            animation: blink 0.8s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 49% { background-color: #ff3344; }
+            50%, 100% { background-color: transparent; }
         }
 
         .cta-btn {
@@ -102,20 +123,40 @@
         <div class="top-tag">End of the road</div>
         
         <div class="character-box">
-    <!-- Sharp Devil/Imp Silhouette -->
-    <svg viewBox="0 0 24 24" xmlns="http://w3.org">
-        <path d="M12,2C11.64,4 9.17,4.86 7.62,5.21C6.2,5.53 4.54,4.6 4,4C4.31,5.25 5.25,7.74 7.05,8.81C5.23,10.23 4,12.47 4,15C4,19.42 7.58,23 12,23C16.42,23 20,19.42 20,15C20,12.47 18.77,10.23 16.95,8.81C18.75,7.74 19.69,5.25 20,4C19.46,4.6 17.8,5.53 16.38,5.21C14.83,4.86 12.36,4 12,2M9,13A1.5,1.5 0 0,1 10.5,14.5A1.5,1.5 0 0,1 9,16A1.5,1.5 0 0,1 7.5,14.5A1.5,1.5 0 0,1 9,13M15,13A1.5,1.5 0 0,1 16.5,14.5A1.5,1.5 0 0,1 15,16A1.5,1.5 0 0,1 13.5,14.5A1.5,1.5 0 0,1 15,13M12,17C13.67,17 15,18.33 15,20H9C9,18.33 10.33,17 12,17Z"/>
-    </svg>
-</div>
+            <!-- Sharp Devil/Imp Silhouette -->
+            <svg viewBox="0 0 24 24" xmlns="http://w3.org">
+                <path d="M12,2C11.64,4 9.17,4.86 7.62,5.21C6.2,5.53 4.54,4.6 4,4C4.31,5.25 5.25,7.74 7.05,8.81C5.23,10.23 4,12.47 4,15C4,19.42 7.58,23 12,23C16.42,23 20,19.42 20,15C20,12.47 18.77,10.23 16.95,8.81C18.75,7.74 19.69,5.25 20,4C19.46,4.6 17.8,5.53 16.38,5.21C14.83,4.86 12.36,4 12,2M9,13A1.5,1.5 0 0,1 10.5,14.5A1.5,1.5 0 0,1 9,16A1.5,1.5 0 0,1 7.5,14.5A1.5,1.5 0 0,1 9,13M15,13A1.5,1.5 0 0,1 16.5,14.5A1.5,1.5 0 0,1 15,16A1.5,1.5 0 0,1 13.5,14.5A1.5,1.5 0 0,1 15,13M12,17C13.67,17 15,18.33 15,20H9C9,18.33 10.33,17 12,17Z"/>
+            </svg>
+        </div>
 
         <h1>There is nothing for you here.</h1>
         
         <div class="divider"></div>
         
-        <p>You have arrived at a destination without a map. There is no webpage waiting for you behind this door.</p>
+        <div class="terminal-text-container">
+            <p id="typewriter"></p><span class="cursor"></span>
+        </div>
         
-        <a href="/" class="cta-btn">Turn back around</a>
+        <!-- Redirect Destination Button -->
+        <a href="https://duckdns.org" class="cta-btn">Turn back around</a>
     </div>
+
+    <script>
+        const text = "You have arrived at a destination without a map. There is no webpage waiting for you behind this door...";
+        let index = 0;
+        const speed = 40; // Typing speed in milliseconds
+
+        function typeWriter() {
+            if (index < text.length) {
+                document.getElementById("typewriter").innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, speed);
+            }
+        }
+
+        // Start typing effect on load
+        window.onload = typeWriter;
+    </script>
 
 </body>
 </html>
